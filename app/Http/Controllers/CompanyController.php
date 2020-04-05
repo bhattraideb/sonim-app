@@ -112,30 +112,15 @@ class CompanyController extends Controller
     {
         try
         {
-            $data = $request->only('name', 'email', 'address', 'contact_number', 'status');
-            $rules = [
+            $data = request()->validate([
                 'name'           => 'required|max:255',
                 'email'          => 'required|email',
                 'address'        => 'required|max:255',
                 'contact_number' => 'required|numeric',
-            ];
-            $validator  = Validator::make($data, $rules);
-            if ($validator->fails()) {
-                $errors = $validator->messages();
-                return redirect()->back()->withErrors($errors);
-            }
+                'status'         => 'required',
+            ]);
 
-            $update = Company::where([
-                ['id', $request->company_id],
-
-            ])
-                ->update([
-                    'name'              => $request->name,
-                    'email'             => $request->email,
-                    'address'           => $request->address,
-                    'contact_number'    => $request->contact_number,
-                    'status'            => $request->status ?? 'inactive',
-                ]);
+            $update = $company->update($data);
 
             if($update){
                 Session::flash('success', 'Company updated successfully.');

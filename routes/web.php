@@ -27,7 +27,7 @@ Route::middleware('auth:web')->group(function(){
         Route::get('/add', 'CompanyController@create')->name('company.create');
         Route::post('/create', 'CompanyController@store')->name('company.store');
         Route::get('/edit/{id}', 'CompanyController@edit')->name('company.edit');
-        Route::post('/update', 'CompanyController@update')->name('company.update');
+        Route::patch  ('/update/{company}', 'CompanyController@update')->name('company.update');
         Route::get('/delete/{id}', 'CompanyController@destroy')->name('company.delete');
 
         Route::group(['prefix' => 'admin'], function() {
@@ -35,7 +35,7 @@ Route::middleware('auth:web')->group(function(){
             Route::get('/add', 'CompanyAdminController@create')->name('admin.create');
             Route::post('/create', 'CompanyAdminController@store')->name('admin.store');
             Route::get('/edit/{id}', 'CompanyAdminController@edit')->name('admin.edit');
-            Route::post('/update', 'CompanyAdminController@update')->name('admin.update');
+            Route::patch('/update/{companyAdmin}', 'CompanyAdminController@update')->name('admin.update');
             Route::get('/delete/{id}', 'CompanyAdminController@destroy')->name('admin.delete');
         });
     });

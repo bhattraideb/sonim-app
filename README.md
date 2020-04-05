@@ -66,3 +66,10 @@ Company list API A basic application developmed in Laravel 7.4 to demonstrate RE
 
   
   For register and update you have to pass the data in JSON format as given above.
+  
+  
+  ## Testcases
+I have created and tested two classes for unit testing. You can run these from terminal inside you project directory with these commands: 
+  - vendor/bin/phpunit tests/Feature/CompanyTest.php
+  - vendor/bin/phpunit tests/Feature/CompanyAdminTest.php
+

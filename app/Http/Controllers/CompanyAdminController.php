@@ -22,7 +22,7 @@ class CompanyAdminController extends Controller
             $query = $query->where('company_id', '=', $id);
         }
         $admins = $query->with('company')
-        ->get();
+            ->get();
         return view('admin.index')
             ->with('admins', $admins);
     }
@@ -56,6 +56,7 @@ class CompanyAdminController extends Controller
                 'name'           => 'required|max:255',
                 'email'          => 'required|email',
                 'contact_number' => 'required|numeric',
+                'status'         => 'required',
             ];
             $validator  = Validator::make($data, $rules);
             if ($validator->fails()) {
@@ -126,30 +127,15 @@ class CompanyAdminController extends Controller
     {
         try
         {
-            $data = $request->only('company_id', 'name', 'email', 'contact_number', 'status');
-            $rules = [
+            $data = request()->validate([
                 'company_id'     => 'required|integer',
                 'name'           => 'required|max:255',
                 'email'          => 'required|email',
                 'contact_number' => 'required|numeric',
-            ];
-            $validator  = Validator::make($data, $rules);
-            if ($validator->fails()) {
-                $errors = $validator->messages();
-                return redirect()->back()->withErrors($errors);
-            }
+                'status'         => 'required',
+            ]);
 
-            $update = CompanyAdmin::where([
-                ['id', $request->admin_id],
-
-            ])
-                ->update([
-                    'company_id'        => $request->company_id,
-                    'name'              => $request->name,
-                    'email'             => $request->email,
-                    'contact_number'    => $request->contact_number,
-                    'status'            => $request->status ?? 'inactive',
-                ]);
+            $update = $companyAdmin->update($data);
 
             if($update){
                 Session::flash('success', 'Admin updated successfully.');

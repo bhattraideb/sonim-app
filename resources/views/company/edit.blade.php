@@ -17,9 +17,8 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
-                                {{ Form::open(['url' => route('company.update'),
-                                    'enctype' => 'multipart/form-data',
-                                    'method' => 'POST',
+                                {{ Form::open(['url' => route('company.update', $company),
+                                    'method' => 'PATCH',
                                     'name' => 'frm_add',])
                                 }}
                                 <div class="form-group col-md-12 ">

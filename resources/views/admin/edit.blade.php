@@ -17,8 +17,8 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12">
-                                {{ Form::open(['url' => route('admin.update'),
-                                    'method' => 'POST',
+                                {{ Form::open(['url' => route('admin.update', $admin),
+                                    'method' => 'PATCH',
                                     'name' => 'frm_add',])
                                 }}
 
